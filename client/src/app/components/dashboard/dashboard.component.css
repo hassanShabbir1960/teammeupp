@@ -1,0 +1,226 @@
+@import url("https://use.fontawesome.com/releases/v5.0.11/css/all.css");
+@import url("https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css");
+
+
+.select-css {
+    width: 20%;
+    height: 50px;
+    font-size: 100%;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 0;
+    background-color: #1a84e8;
+    border: none;
+    color: white;
+    padding: 10px;
+    padding-right: 38px;
+    float: right;
+    border-radius: 4%;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    /* Adding transition effect */
+    transition: color 0.3s ease, background-color 0.3s ease, border-bottom-color 0.3s ease;
+  }
+.select-css2 {
+  
+  width: 40%;
+  height: 50px;
+  font-size: 100%;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 0;
+  background-color: #1a84e8;
+  border: none;
+  color: white;
+  padding: 10px;
+  padding-right: 38px;
+  float: left;
+  border-radius: 4%;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  /* Adding transition effect */
+  transition: color 0.3s ease, background-color 0.3s ease, border-bottom-color 0.3s ease;
+}
+  /* For IE <= 11 */
+  select::-ms-expand {
+    display: none;
+  }
+  select:hover,
+  select:focus {
+    color: #1a84e8;
+    background-color: white;
+    border-bottom-color: black;
+  }
+
+  /*Radio box*/
+
+input[type="radio"] + .label-text:before{
+	content: "\f111";
+	font-family: "Font Awesome 5 Free";
+	speak: none;
+	font-style: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+	-webkit-font-smoothing:antialiased;
+	width: 1em;
+	display: inline-block;
+	margin-right: 5px;
+}
+
+input[type="radio"]:checked + .label-text:before{
+	content: "\f192";
+	color: #8e44ad;
+	animation: effect 250ms ease-in;
+}
+
+input[type="radio"]:disabled + .label-text{
+	color: #aaa;
+}
+
+input[type="radio"]:disabled + .label-text:before{
+	content: "\f111";
+	color: #ccc;
+}
+.col-md-4 {
+  width: 50%;
+}
+.table-highlighted {
+  border: 5px;
+  border-color: black;
+}
+.outer {
+    width:100%;
+    display: -webkit-box;
+    -webkit-box-pack: center;
+    -webkit-box-align: center;
+    text-align: center;
+}
+input[type="checkbox"], input[type="radio"]{
+	position: absolute;
+	right: 9000px;
+}
+
+@keyframes effect{
+	0%{transform: scale(0);}
+	25%{transform: scale(1.3);}
+	75%{transform: scale(1.4);}
+	100%{transform: scale(1);}
+}
+
+input[type="checkbox"] + .label-text:before{
+	content: "\f096";
+	font-family: "FontAwesome";
+	speak: none;
+  font-style: normal;
+  font-size: x-large;
+  font-weight: bold;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 0;
+	-webkit-font-smoothing:antialiased;
+	width: 1em;
+	display: inline-block;
+	margin-right: 90px;
+}
+
+input[type="checkbox"]:checked + .label-text:before{
+	content: "\f14a";
+	color: #2980b9;
+  animation: effect 250ms ease-in;
+  
+}
+
+input[type="checkbox"]:disabled + .label-text{
+	color: #aaa;
+}
+
+input[type="checkbox"]:disabled + .label-text:before{
+	content: "\f0c8";
+	color: #ccc;
+}
+
+
+.item {
+  display: block;
+  width: 50px;
+}
+label {
+  display: inline;
+}
+input[type=checkbox] {
+  display: inline;
+}
+
+
+.table {
+  border: none;
+}
+
+.table-definition thead th:first-child {
+  pointer-events: none;
+  background: white;
+  border: none;
+}
+
+.table td {
+  vertical-align: middle;
+}
+
+.page-item > * {
+  border: none;
+}
+
+.custom-checkbox {
+min-height: 1rem;
+padding-left: 0;
+margin-right: 0;
+cursor: pointer; 
+}
+.custom-checkbox .custom-control-indicator {
+  content: "";
+  display: inline-block;
+  position: relative;
+  width: 30px;
+  height: 10px;
+  background-color: #818181;
+  border-radius: 15px;
+  margin-right: 10px;
+  -webkit-transition: background .3s ease;
+  transition: background .3s ease;
+  vertical-align: middle;
+  margin: 0 16px;
+  box-shadow: none; 
+}
+  .custom-checkbox .custom-control-indicator:after {
+    content: "";
+    position: absolute;
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    background-color: #f1f1f1;
+    border-radius: 21px;
+    box-shadow: 0 1px 3px 1px rgba(0, 0, 0, 0.4);
+    left: -2px;
+    top: -4px;
+    -webkit-transition: left .3s ease, background .3s ease, box-shadow .1s ease;
+    transition: left .3s ease, background .3s ease, box-shadow .1s ease; 
+  }
+.custom-checkbox .custom-control-input:checked ~ .custom-control-indicator {
+  background-color: #84c7c1;
+  background-image: none;
+  box-shadow: none !important; 
+}
+  .custom-checkbox .custom-control-input:checked ~ .custom-control-indicator:after {
+    background-color: #84c7c1;
+    left: 15px; 
+  }
+.custom-checkbox .custom-control-input:focus ~ .custom-control-indicator {
+  box-shadow: none !important; 
+}
+
+.fade {
+  transition-duration: 1s;
+}

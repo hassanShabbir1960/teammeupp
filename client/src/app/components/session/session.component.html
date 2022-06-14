@@ -1,0 +1,154 @@
+<div class="box" style=" text-align:center; font-weight:1; background-color: black; color: white; border-top-left-radius: 0%; border-top-right-radius: 0%; font-size:xx-large;">SESSION MANAGEMENT
+<br>
+<button type="button" class="button is-primary" (click)="createSession('Tennis')" style="margin-top:10px;width:24%;font-weight:bold;">Create Tennis Session</button>‏‏‎
+<button type="button" class="button is-primary" (click)="createSession('Table Tennis')" style="margin-top:10px;width:24%;font-weight:bold;">Create Table Tennis Session</button>‏‏‎
+<button type="button" class="button is-primary" (click)="createSession('Badminton')" style="margin-top:10px;width:24%;font-weight:bold;">Create Badminton Session</button>‏‏‎
+<button type="button" class="button is-primary" (click)="createSession('Squash')" style="margin-top:10px;width:24%;font-weight:bold;">Create Squash Session</button>‏‏‎
+</div>
+
+
+<ng-container *ngIf="authService.isAdmin()">
+	<app-toasts></app-toasts>
+<br>
+	<!-- CRUD Operations on Players and Coaches -->
+
+	<div class="row show-hide-message">
+		<div [ngClass]="messageClassSession">
+		  {{ messageSession }}
+		</div>
+	</div>
+	
+	<h3>Active Sessions‎‎‎‏‏‎ ‎‏‏‎ ‎
+		<button class="button is-primary" style="font-weight:bold" type="button" data-toggle="collapse" data-target="#sessionstable" aria-expanded="false" aria-controls="sessionstable">
+			Show/Hide
+		</button>
+	</h3>
+	<div class="collapse show" id="sessionstable">
+		<table class="table">
+		<thead class="thead-light">
+			<tr>
+			<th scope="col">#</th>
+			<th scope="col">Type</th>
+			<th scope="col">Player</th>
+			<th scope="col">Opponent</th>
+			<th scope="col">Game</th>
+			<th scope="col">Evaluator</th>
+			<th scope="col">Venue</th>
+			</tr>
+		</thead>
+		<tbody>
+			<ng-container *ngFor="let session of sessions; let i=index">
+				<tr>
+				<th scope="row">{{i+1}}</th>
+				<td>{{session.type}}</td>
+				<td>{{session.player.username}}</td>
+				<td>{{session.oppPlayer?session.opponentPlayer.username:session.opponentCoach.username}}</td>
+				<td>{{session.game}}</td>
+				<td>{{session.evaluatorUsername}}</td>
+				<td>{{session.court}}</td>
+				</tr>
+			</ng-container>
+		</tbody>
+		</table>
+	</div>
+	Total Active Sessions: {{sessions.length}}
+	<div class="row show-hide-message">
+		<div [ngClass]="messageClassPlayer">
+		  {{ messagePlayer }}
+		</div>
+	</div>
+	<p><br><br>
+	<h3>Online Players‎‎‎‏‏‎ ‎‏‏‎ ‎
+		<button class="button is-primary" style="font-weight:bold" type="button" data-toggle="collapse" data-target="#playerstable">
+			Show/Hide
+		</button>
+	</h3>
+	<div class="collapse show" id="playerstable">
+		<table class="table">
+		<thead class="thead-light">
+			<tr>
+			<th scope="col">Username</th>
+			<th scope="col">Name</th>
+			<th scope="col">Email</th>
+			<th scope="col">Status</th>
+			</tr>
+		</thead>
+		<tbody>
+			<ng-container *ngFor="let player of Players;">
+				<ng-container *ngIf="player.attendenceMarked">
+					<tr>
+						<td>{{player.username}}</td>
+						<td>{{player.name}}</td>
+						<td>{{player.email}}</td>
+						<td>
+							{{player.attendenceMarked?'Online':'Offline'}}
+						</td>
+					</tr>
+				</ng-container>
+			</ng-container>
+		</tbody>
+		</table>
+	</div>
+	Total Active Players: {{Players.length}}
+    
+	<div class="row show-hide-message">
+		<div [ngClass]="messageClassCoach">
+		{{ messageCoach }}
+		</div>
+	</div>
+	<p><br><br>
+	<h3>Online Coaches ‎‏‏‎ ‎
+		<button class="button is-primary" style="font-weight:bold" type="button" data-toggle="collapse" data-target="#coachestable">
+			Show/Hide
+		</button>
+	</h3>
+	<div class="collapse show" id="coachestable">
+		<table class="table">
+		<thead class="thead-light">
+			<tr>
+			<th scope="col">Username</th>
+			<th scope="col">Name</th>
+			<th scope="col">Email</th>
+			<th scope="col">Status</th>
+			</tr>
+		</thead>
+		<tbody>
+			<ng-container *ngFor="let coach of Coaches;">
+				<ng-container *ngIf="coach.status">
+					<tr>
+						<td>{{coach.username}}</td>
+						<td>{{coach.name}}</td>
+						<td>{{coach.email}}</td>
+						<td>{{coach.status?'Online':'Offline'}}
+					</td>
+					</tr>
+				</ng-container>
+			</ng-container>
+		</tbody>
+		</table>
+	</div>
+	Total Active Coaches: {{Coaches.length}}
+
+</ng-container>
+<br><br><br>
+
+<div class="container is-fluid">
+    
+	<footer class="footer"><div class="container">
+		<div class="level">
+		  <div class="level-left">
+			<div class="level-item"><a class="title is-4" href="#"><img src="assets/images/teammeup-black.png" alt="TeamMeUp" width="200"></a></div>
+		  </div>
+		  <div class="level-right">Made Using:&nbsp;&nbsp;<a class="level-item" href="https://bulma.io/">Bulma</a><a class="level-item" href="https://unsplash.com/">Unsplash</a><a class="level-item" href="https://github.com/">Github</a><a class="level-item" href="http://freepik.com/">FreePik</a></div>
+		</div>
+		<hr><div class="columns">
+		  <div class="column">
+			<div class="buttons"><a class="button" href="https://github.com/hassanShabbir1960/teammeupp">&nbsp;Code&nbsp;<i class="fas fa-code"></i></a></div>
+		  </div>
+		  <div class="column has-text-centered has-text-right-tablet">
+			<p class="subtitle is-6">&copy; 2020 TeamMeUp. All right reserved.</p>
+		  </div>
+		</div>
+	  </div>
+	</footer>
+  </div>

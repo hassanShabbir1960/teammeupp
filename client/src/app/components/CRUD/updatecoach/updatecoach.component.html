@@ -1,0 +1,67 @@
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<div class="box" style=" text-align:center; font-weight:1; background-color: black; color: white; border-top-left-radius: 0%; border-top-right-radius: 0%; font-size:xx-large; text-transform:uppercase;">
+  UPDATE COACH
+  <br><div style="font-size:x-large">{{username}}</div>
+</div>
+
+<div class="row show-hide-message">
+    <div [ngClass]="messageClass">
+      {{ message }}
+    </div>
+  </div>
+
+<form [formGroup]="form" (submit)="submitUpdateCoach()">
+    <div class="form-group">
+        <label for="name" class="h4">Full name</label>
+        <div [ngClass]="{'has-error': (form.controls.name.errors && form.controls.name.dirty), 'has-success': !form.controls.name.errors}">
+          <div class="card mb-5">
+            <input type="text" name="name" formControlName="name" class="form-control" id="name" placeholder="Full name">
+          </div>
+        <!-- Validation -->
+        <ul class="help-block">
+            <li *ngIf="form.controls.name.errors?.required && form.controls.name.dirty">This field is required</li>
+        </ul>
+        </div>
+    </div>
+
+    <p>
+    <h4>Assign/Remove Players From This Coach</h4>
+      <div class="card mb-5">
+        <table class="table">
+        <thead class="thead-light">
+          <tr>
+          <th scope="col">#</th>
+          <th scope="col">Username</th>
+          <th scope="col">Name</th>
+          <th scope="col">Email</th>
+          <th scope="col">Toggle</th>
+          </tr>
+        </thead>
+        <tbody>
+          <ng-container *ngFor="let player of players; let i=index">
+            <tr>
+            <th scope="row">{{i+1}}</th>
+            <td>{{player.username}}</td>
+            <td>{{player.name}}</td>
+            <td>{{player.email}}</td>
+            <td>
+              <label class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" (change)="togglePlayer(player.username)">
+                <span class="custom-control-indicator"></span>
+              </label>
+            </td>
+            </tr>
+          </ng-container>
+        </tbody>
+        </table>
+      </div>
+
+      <input [disabled]="!form.valid || processing " type="submit" class="button is-primary" value="Submit"/>
+
+    <br>
+    <br>
+    <br>
+
+  </form>

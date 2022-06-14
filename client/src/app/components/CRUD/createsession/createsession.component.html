@@ -1,0 +1,89 @@
+<div class="box" style=" text-align:center; font-weight:1; background-color: black; color: white; border-top-left-radius: 0%; border-top-right-radius: 0%; font-size:xx-large; text-transform:uppercase">CREATE A {{sessionGame}} SESSION</div>
+
+<div class="row show-hide-message">
+    <div [ngClass]="messageClass">
+      {{ message }}
+    </div>
+</div>
+
+<br>
+<div style="width: 49%; float: left;">
+<h4>Select first player:</h4>
+<table class="table">
+	<thead class="thead-light">
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Username</th>
+            <th>Role</th>
+        </tr>
+    </thead>
+    <tbody>
+        <ng-container *ngFor="let player of players;">
+            <tr [ngClass]="player.selectedTable1?'dark-row':'light-row'">
+                <td>
+                    <button type="button" style="font-weight:bold" [ngClass]="player.selectedTable1?'button is-success':'button is-primary'" (click)="selectPlayer1(player.username)">{{player.name}}</button>‏‏‎ ‎‏‏‎ ‎
+                </td>
+                <td>{{player.email}}</td>
+                <td>{{player.username}}</td>
+                <td>{{player.role}}</td>
+            </tr>
+        </ng-container>
+    </tbody>
+</table>
+</div>
+
+<div style="width:49%; float: right;">
+    
+<h4>Select second player:</h4>
+<table class="table">
+	<thead class="thead-light">
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Username</th>
+            <th>Role</th>
+        </tr>
+    </thead>
+    <tbody>
+        <ng-container *ngFor="let player of players;">
+            <tr [ngClass]="player.selectedTable1?'disabled':'light-row'">
+                <td>
+                    <button [disabled]="player.selectedTable1" type="button" style="font-weight:bold" [ngClass]="player.selectedTable2?'button is-success':'button is-primary'" (click)="selectPlayer2(player.username)">{{player.name}}</button>‏‏‎ ‎‏‏‎ ‎
+                </td>
+                <td>{{player.email}}</td>
+                <td>{{player.username}}</td>
+                <td>{{player.role}}</td>
+            </tr>
+        </ng-container>
+    </tbody>
+</table>
+</div>
+
+<div style="text-align: center;">
+    <form>
+        <h5>Select Court and Instructor</h5>
+        <div class="select is-rounded is-primary">
+            <select name="selectCourt" style="display:inline-block" (change)="selectCourt($event.target.value)">
+                <option class="form-check-input" name="gob" value="none" selected>Select Court</option>
+                <ng-container *ngFor="let court of courts;">
+                    <option class="form-check-input" name="gob" value={{court}}>
+                        <span class="label-text">{{court}}</span>
+                </ng-container>
+            </select>‏‏‎ ‎‏‏‎ ‎
+        </div>
+        ‏‏‎ ‎‏‏‎
+        <div class="select is-rounded is-primary">
+            <select name="selectEvaluator" style="display:inline-block" (change)="selectEvaluator($event.target.value)">
+                <option class="form-check-input" name="gob" value="none" selected>Select Evaluator</option>
+                <ng-container *ngFor="let coach of coaches;">
+                    <option class="form-check-input" name="gob" value={{coach._id}}>
+                    <span class="label-text">{{coach.username}}</span>
+                </ng-container>
+            </select>
+        </div>
+    </form>
+
+</div>
+
+<input [disabled]="!evaluatorChosen || !courtChosen || !selectedPlayer1 || !selectedPlayer2" class="button is-primary" type="submit" value="Submit" (click)="createSession()" />

@@ -1,0 +1,13 @@
+.winner-row {
+    border-radius: 5px;
+    background-color: green;
+}
+
+.loser-row {
+    border-radius: 5px;
+    background-color: red;
+}
+
+.default {
+    background-color: white;
+}

@@ -1,0 +1,96 @@
+
+    <nav class="navbar is-black" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+          <a routerLink="/">
+            <img style="height: 60px;" src="../../../assets/images/teammeup.png">
+          </a>
+      
+          <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+          </a>
+        </div>
+      
+        <div id="navbarBasicExample" class="navbar-menu">
+          <div class="navbar-start">
+            <a class="navbar-item is-white" style="text-decoration: none;" *ngIf="authService.loggedIn()" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}" routerLink="/dashboard">
+              <span class="icon has-text-primary">
+                <i class="fas fa-compass"></i>
+              </span>&nbsp;Dashboard
+            </a>
+      
+            <a class="navbar-item is-white" style="text-decoration: none;" *ngIf="authService.loggedIn() && !authService.isAdmin()" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}" routerLink="/profile">
+              <span class="icon has-text-primary">
+                <i class="fas fa-user-alt"></i>
+              </span>&nbsp;Profile
+            </a>
+      
+            <a class="navbar-item is-white" style="text-decoration: none;" *ngIf="authService.loggedIn() && authService.isAdmin()" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}" routerLink="/session">
+              <span class="icon has-text-primary">
+                <i class="fas fa-clock"></i>
+              </span>&nbsp;Sessions
+            </a>
+            <a class="navbar-item is-white" style="text-decoration: none;" *ngIf="authService.loggedIn() && authService.isPlayer()" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}" routerLink="/statistics">
+              <span class="icon has-text-primary">
+                <i class="fas fa-chart-line"></i>
+              </span>&nbsp;Statistics
+            </a>
+            <a class="navbar-item is-white" style="text-decoration: none;" *ngIf="authService.loggedIn() && authService.isAdmin()" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}" routerLink="/notifications">
+              <span class="icon has-text-primary">
+                <i class="fas fa-bell"></i>
+              </span>&nbsp;Notifications &nbsp;  <ng-container *ngIf="showTag"><span class="tag is-primary is-normal" style="color: black;">{{notificationCount}}</span></ng-container>
+            </a>
+              
+            <a class="navbar-item is-white" style="text-decoration: none;" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}" routerLink="/about">
+              <span class="icon has-text-primary">
+                <i class="fas fa-dice-d20"></i>
+              </span>&nbsp;About Us
+            </a>
+          </div>
+      
+          <div class="navbar-end">
+            <div class="navbar-item" *ngIf="!authService.loggedIn()" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}" routerLink="/register">
+              <div class="buttons" style="width: 3%;">
+                <a class="button is-white">
+                  <b style="color: black; text-decoration: none;">
+                    <span class="icon has-text-black">
+                      <i class="fas fa-user-plus"></i>
+                    </span>&nbsp;&nbsp;&nbsp;Sign up</b>
+                </a>
+              </div>
+            </div>
+            <div class="navbar-item" *ngIf="!authService.loggedIn()" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}" routerLink="/login">
+                <div class="buttons" style="width: 3%;">
+                    <a class="button is-white">
+                    <b style="color: black; text-decoration: none;">
+                      <span class="icon has-text-black">
+                        <i class="fas fa-sign-in-alt"></i>
+                      </span>&nbsp;&nbsp;&nbsp;Login</b>
+                    </a>
+                </div>
+            </div>
+            <div class="navbar-item" *ngIf="authService.loggedIn() && !authService.isAdmin()">
+                <div class="buttons" style="width: 3%;">
+                    <a class="button is-white" (click)="onLogoutClick()" routerLink="/login">
+                    <b style="color: black; text-decoration: none;">
+                      <span class="icon has-text-black">
+                      <i class="fas fa-sign-out-alt"></i>
+                    </span>&nbsp;&nbsp;&nbsp;Logout</b>
+                    </a>
+                </div>
+            </div>
+
+            <div class="navbar-item" *ngIf="authService.loggedIn() && authService.isAdmin()" style="right:110px;">
+              <div class="buttons" style="width: 3%;">
+                  <a class="button is-white" (click)="onLogoutClick()" routerLink="/login">
+                  <b style="color: black; text-decoration: none;">
+                    <span class="icon has-text-black">
+                    <i class="fas fa-sign-out-alt"></i>
+                    </span>&nbsp;&nbsp;&nbsp;Logout</b>
+                  </a>
+              </div> 
+          </div>
+          </div>
+        </div>
+      </nav>

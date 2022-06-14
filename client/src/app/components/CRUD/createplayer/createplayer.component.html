@@ -1,0 +1,215 @@
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<div class="box" style=" text-align:center; font-weight:1; background-color: black; color: white; border-top-left-radius: 0%; border-top-right-radius: 0%; font-size:xx-large; text-transform:uppercase;">CREATE NEW PLAYER</div>
+
+<div class="row show-hide-message">
+    <div [ngClass]="messageClass">
+      {{ message }}
+    </div>
+  </div>
+
+<form [formGroup]="form">
+    <div class="form-group">
+        <label for="name" class="h4">Full name</label>
+        <div [ngClass]="{'has-error': (form.controls.name.errors && form.controls.name.dirty), 'has-success': !form.controls.name.errors}" class="card mb-5">
+        <input type="text" name="name" formControlName="name" class="form-control" id="name" placeholder="Full name">
+        <!-- Validation -->
+        <ul class="help-block">
+            <li *ngIf="form.controls.name.errors?.required && form.controls.name.dirty">This field is required</li>
+        </ul>
+        </div>
+    
+    <div class="form-group">
+        <label for="email" class="h4">Email</label>
+        <div [ngClass]="{'has-error': (form.controls.email.errors && form.controls.email.dirty), 'has-success': !form.controls.email.errors}" class="card mb-5">
+            <input type="text" name="email" class="form-control" autocomplete="off" placeholder="*Email" formControlName="email" />
+            <!-- Validation -->
+            <ul class="help-block">
+                <li *ngIf="form.controls.email.errors?.required && form.controls.email.dirty">This field is required</li>
+                <li *ngIf="(form.controls.email.errors?.minlength && form.controls.email.dirty || form.controls.email.errors?.maxlength && form.controls.email.dirty ) && form.controls.email.dirty">Minimum characters: 5, Maximum characters: 30</li>
+                <li *ngIf="form.controls.email.errors?.validateEmail && form.controls.email.dirty">This must be a valid e-mail</li>
+            </ul>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="username" class="h4">Username</label>
+        <div [ngClass]="{'has-error': (form.controls.username.errors && form.controls.username.dirty) , 'has-success': !form.controls.username.errors }"></div>
+            <div  class="card mb-5">
+                <input type="text" name="username" formControlName="username" class="form-control" id="exampleInputUsername1" placeholder="Enter a valid username" />
+            </div>
+            <!-- Validation -->
+            <ul class="help-block">
+                <li *ngIf="form.controls.username.errors?.required && form.controls.username.dirty">This field is required</li>
+                <li *ngIf="form.controls.username.errors?.minlength && form.controls.username.dirty || form.controls.username.errors?.maxlength && form.controls.username.dirty ">Minimum characters: 3, Maximum characters: 15</li>
+                <li *ngIf="form.controls.username.errors?.validateUsername && form.controls.username.dirty">Username must not have any special characters</li>
+            </ul>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="password" class="h4">Password</label>
+        <div [ngClass]="{'has-error': (form.controls.password.errors && form.controls.password.dirty), 'has-success': !form.controls.password.errors}" class="card mb-5">
+            <input type="password" name="password" class="form-control" autocomplete="off" placeholder="*Password" formControlName="password" />
+            <!-- Validation -->
+            <ul class="help-block">
+                <li *ngIf="form.controls.password.errors?.required && form.controls.password.dirty">This field is required</li>
+                <li *ngIf="form.controls.password.errors?.minlength && form.controls.password.dirty || form.controls.password.errors?.maxlength && form.controls.password.dirty ">Minimum characters: 8, Maximum characters: 35</li>
+                <li *ngIf="form.controls.password.errors?.validatePassword && form.controls.password.dirty">Password must atleast contain one Uppercase letter, one special letter and numbers(and a length of minumum 8).</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="confirm" class="h4">Confirm Password</label>
+        <div [ngClass]="{'has-error': (form.controls.confirm.errors && form.controls.confirm.dirty) || (form.errors?.matchingPasswords && form.controls.confirm.dirty), 'has-success': !form.controls.confirm.errors && !form.errors?.matchingPasswords}" class="card mb-5">
+            <input type="password" name="confirm" class="form-control" autocomplete="off" placeholder="*Confirm Password" formControlName="confirm" />
+            <!-- Validation -->
+            <ul class="help-block">
+                <li *ngIf="form.controls.confirm.errors?.required && form.controls.confirm.dirty">This field is required</li>
+                <li *ngIf="form.errors?.matchingPasswords && form.controls.confirm.dirty">Password do not match</li>
+            </ul>
+        </div>
+    </div>
+    <!-- <input [disabled]="!form.valid || processing " type="submit" class="button is-primary" value="Submit"/> -->
+
+    <br>
+  </form>
+
+  <ng-container *ngIf="!lastLogin">
+    <h4>Select your Weekly schedule!</h4>
+    <h5>Each slot is of 1 hour!</h5>
+        <!-- <div class="card-mb5"> -->
+            <div class="card-block p-0">
+                <table class="table">
+                    <thead class="thead-light">
+                        <tr>
+                            <th style="width:15%">Select</th>
+                            <th style="width:25%">Day</th>
+                            <th style="width:60">Time</th>
+                        </tr>
+                    </thead>
+                    <ng-container *ngFor="let day of weekdays;">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <label class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" (change)="selectDay(day.name)">
+                                        <span class="custom-control-indicator"></span>
+                                    </label>
+                                </td>
+                                <td>
+                                    <h6>{{day.name}}</h6>
+                                </td>
+                                <td>
+                                    <ng-container *ngIf="day.status">
+                                        <ngb-timepicker [(ngModel)]="day.time"></ngb-timepicker>
+                                    </ng-container>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </ng-container>
+                </table>
+            <!-- </div> -->
+            <br>
+
+            <h4 >Select your interests!</h4>
+            <!-- <div class="card mb-5"> -->
+                <div class="card-block p-0">
+                <table class="table">
+                    <thead class="thead-light">
+                        <tr>
+                            <th style="width:15%">Select</th>
+                            <th style="width:25%">Name</th>
+                            <th style="width:60%">Level</th>
+                        </tr>
+                    </thead>
+                    <ng-container *ngFor="let game of games;">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <label class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" (change)="selectGame(game.name)">
+                                        <span class="custom-control-indicator"></span>
+                                    </label>
+                                </td>
+                                <td>
+                                    <h6>{{game.name}}</h6>
+                                </td>
+                                <td>
+                                    <ng-container *ngIf="game.status">
+                                        <div class="select is-rounded is-primary">
+                                            <select name="difficulty" class="select-css2" (change)="selectLevel(game.name, $event)">
+                                                <option value=-1>Select a Level!</option>
+                                                <option value="beginner">Beginner</option>
+                                                <option value="medium">Medium</option>
+                                                <option value="advance">Advance</option>
+                                            </select>
+                                        </div>
+                                    </ng-container>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </ng-container>
+                </table>
+            <!-- </div> -->
+        </div>
+
+        <div class="outer">
+            <div class="col-md-4">
+                <form>
+                    <h5>Select your level</h5>
+                    <div class="form-check">
+                        <label>
+                            <input class="form-check-input" type="radio" value="beginner" [(ngModel)]="playerRanking" name="gob" value="1" [checked]="true" 
+                            (change)="setPlayerRanking($event.target.value)"/><span class="label-text">Beginner</span>
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <label>
+                            <input class="form-check-input" type="radio" value="medium" [(ngModel)]="playerRanking" name="gob" value="2" [checked]="true" 
+                            (change)="setPlayerRanking($event.target.value)"/> <span class="label-text">Medium</span>
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <label>
+                            <input class="form-check-input" type="radio" value="advance" [(ngModel)]="playerRanking" name="gob" value="3" [checked]="true" 
+                            (change)="setPlayerRanking($event.target.value)"/><span class="label-text">Advance</span>
+                        </label>
+                    </div>
+                </form>
+            </div>
+            
+            <div class="col-md-4">
+                <form>
+                    <h5>Select your opponent's level</h5>
+                    <div class="form-check">
+                        <label>
+                            <input class="form-check-input" type="radio" value="beginner" [(ngModel)]="opponentRanking" name="gob" value="1" [checked]="true" 
+                            (change)="setOpponentRanking($event.target.value)"/><span class="label-text">Beginner</span>
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <label>
+                            <input class="form-check-input" type="radio" value="medium" [(ngModel)]="opponentRanking" name="gob" value="2" [checked]="true" 
+                            (change)="setOpponentRanking($event.target.value)"/><span class="label-text">Medium</span>
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <label>
+                            <input class="form-check-input" type="radio" value="advance" [(ngModel)]="opponentRanking" name="gob" value="3" [checked]="true" 
+                            (change)="setOpponentRanking($event.target.value)"/><span class="label-text">Advance</span>
+                        </label>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <br>
+        
+        <!-- <input [disabled]="!form.valid || processing " type="submit" class="button is-primary" value="Submit"/> -->
+        <input [disabled]="!form.valid || processing || !selectSchedule || !selectPlayerRanking || !selectOpponentRanking || !selectInterests" type="submit" class="button is-primary" value="Submit" (click)="submitCreatePlayer()"/>
+
+        <br>
+        <br>
+    </div>
+
+</ng-container>

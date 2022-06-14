@@ -1,0 +1,109 @@
+<!-- <div style="width:100%;background-image: url('assets/images/bg.png');top:10%"></div> -->
+<img src="assets/images/bg.png" style="width:70%;top:50%;position:absolute;left:17.5%">
+<!-- <div  -->
+
+<div class="box" style=" text-align:center; font-weight:1; background-color: black; color: white; border-top-left-radius: 0%; border-top-right-radius: 0%; font-size:xx-large;">TEAM ME UP SETUP</div>
+
+
+<div class="container is-fluid">
+    
+  <section class="section"><div class="container has-text-centered">
+      <div class="columns is-multiline is-centered">
+        <div class="column is-8 is-4-widescreen">
+          <div class="block"><img src="assets/images/register.jpg" alt=""></div>
+          <h4 class="title"><small class="number">1</small> Sign Up!</h4>
+          <p>Sign up to our platform using a valid email and get Started using our platform!</p>
+        </div>
+        <div class="column is-8 is-4-widescreen">
+          <div class="block"><img src="assets/images/information.png" alt=""></div>
+          <h4 class="title"><small class="number">2</small> Tell us about You!</h4>
+          <p>Fill out some basic information to tell us more about you!</p>
+        </div>
+        <div class="column is-8 is-4-widescreen">
+          <div class="block"><img src="assets/images/ranking.jpg" alt=""></div>
+          <h4 class="title"><small class="number">3</small> View Your scores!</h4>
+          <p>Get your sessions Graded from coaches and see where you stand!</p>
+        </div>
+      </div>
+      <ng-container *ngIf="!authService.loggedIn()">
+        <div class="buttons is-centered"><a class="button is-info" routerLink="/register">Get Started by Signing Up!</a></div>
+        <div class="buttons is-centered"><a class="button is-info" routerLink="/login">Already have an account? Log in!</a></div>
+      </ng-container>
+    </div>
+  </section>
+</div>
+
+
+<div class="container is-fluid">
+    
+  <section class="section"><div class="container has-text-centered">
+      <h2 class="title">Some of our awesome features</h2>
+      <div class="block">
+        <!-- <img class="is-16by9" src="assets/images/features.jpg" alt=""> -->
+        <img class="is-16by9" src="assets/images/person-transparent-emptyhands.png" alt="">
+      </div>
+      <div class="columns has-text-left">
+        <div class="column is-4">
+          <div class="columns">
+            <div class="column is-10">
+              <h4 class="title is-spaced is-4">
+                <span class="icon has-text-info">
+                  <i class="fas fa-user-friends"></i>
+                </span>
+                Diverse Players!</h4>
+              <p class="subtitle is-6">Players of different rankings and with each of unique interesets, hope you get your match!</p>
+            </div>
+          </div>
+        </div>
+        <div class="column is-4">
+          <div class="columns">
+            <div class="column is-10">
+              <h4 class="title is-spaced is-4">
+                <span class="icon has-text-info">
+                  <i class="fas fa-check-circle"></i>
+                </span>
+                Verified Coaches!</h4>
+              <p class="subtitle is-6">Coaches on our platform are verified and give out result honestly! </p>
+            </div>
+          </div>
+        </div>
+        <div class="column is-4">
+          <div class="columns">
+            <div class="column is-10">
+              <h4 class="title is-spaced is-4">
+                <span class="icon has-text-info">
+                  <i class="fas fa-cogs"></i>
+                </span>
+                Maintainence!</h4>
+              <p class="subtitle is-6">Continuous maintainence of our platform by Admins also keeps it lucrative for new players!</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="buttons is-centered"><a class="button is-info" routerLink="/about">About Us!</a></div>
+    </div>
+  </section>
+</div>
+
+
+
+<div class="container is-fluid">
+    
+  <footer class="footer"><div class="container">
+      <div class="level">
+        <div class="level-left">
+          <div class="level-item"><a class="title is-4" href="#"><img src="assets/images/teammeup-black.png" alt="TeamMeUp" width="200"></a></div>
+        </div>
+        <div class="level-right">Made Using:&nbsp;&nbsp;<a class="level-item" href="https://bulma.io/">Bulma</a><a class="level-item" href="https://unsplash.com/">Unsplash</a><a class="level-item" href="https://github.com/">Github</a><a class="level-item" href="http://freepik.com/">FreePik</a></div>
+      </div>
+      <hr><div class="columns">
+        <div class="column">
+          <div class="buttons"><a class="button" href="https://github.com/hassanShabbir1960/teammeupp">&nbsp;Code&nbsp;<i class="fas fa-code"></i></a></div>
+        </div>
+        <div class="column has-text-centered has-text-right-tablet">
+          <p class="subtitle is-6">&copy; 2020 TeamMeUp. All right reserved.</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+</div>

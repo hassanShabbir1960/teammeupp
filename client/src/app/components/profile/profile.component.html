@@ -1,0 +1,265 @@
+
+<div class="box" style="text-align:center; font-weight:1; background-color: black; color: white; border-top-left-radius: 0%; border-top-right-radius: 0%; font-size:xx-large;">PROFILE</div>
+
+
+<header>
+<div class="container">
+  <ng-container *ngIf="isPlayer()">
+
+<div class="tile is-ancestor">
+  <div class="tile is-vertical is-8">
+    <div class="tile">
+      <div class="tile is-parent is-vertical">
+        <article class="tile is-child notification is-primary">
+          <p class="title">Hello {{name}}!</p>
+          <p class="subtitle">Hope you are okay!
+            <span class="icon has-text-link">
+              <i class="far fa-laugh"></i>
+            </span>
+          </p>
+        </article>
+        <article class="tile is-child notification is-warning">
+          <p class="title">You are on {{playerRanking}} ranking!</p>
+          <p class="subtitle">Keep it up! 
+            <span class="icon has-text-primary">
+              <i class="fas fa-thumbs-up"></i>
+            </span>
+          </p>
+        </article>
+      </div>
+      <div class="tile is-parent">
+        <article class="tile is-child notification is-info">
+          <p class="title">Profile Picture</p>
+          <p class="subtitle">Courtesy of Unsplash
+            <span class="icon has-text-black">
+              <i class="fas fa-camera"></i>
+            </span>
+          </p>
+          <figure class="image is-128x128 is-centered">
+            <img class="is-rounded" src="https://source.unsplash.com/random/128x128">
+          </figure>
+        </article>
+      </div>
+    </div>
+    <div class="tile is-parent">
+      <article class="tile is-child notification is-danger">
+        <p class="title">You are currently {{attendence?'Online!':'Offline!'}}</p>
+        <p class="subtitle">Toggle to {{attendence?'unmark':'mark'}} attendence!
+          <span class="icon has-text-warning">
+            <i class="fas fa-clipboard-check"></i>
+          </span>
+        </p>
+        <div class="content">
+          <ng-container *ngIf="attendence">
+            <label class="custom-control custom-checkbox" style="float:right;">
+              <input type="checkbox" id="attendenceToggle" class="custom-control-input" (change)="markAttendence()" checked>
+              <span class="custom-control-indicator"></span>
+            </label>
+          </ng-container>
+          <ng-container *ngIf="!attendence">
+            <label class="custom-control custom-checkbox" style="float:right;">
+              <input type="checkbox" id="attendenceToggle" class="custom-control-input" (change)="markAttendence()">
+              <span class="custom-control-indicator"></span>
+            </label>
+        </ng-container>
+        </div>
+      </article>
+    </div>
+  </div>
+  <div class="tile is-parent">
+    <article class="tile is-child notification is-success">
+      <div class="content">
+        <p class="title">{{name}}'s information!</p>
+        <p class="subtitle">This is what we know about you! 
+          <span class="icon has-text-info">
+            <i class="fas fa-info-circle"></i>
+          </span>
+        </p>
+        <div class="content">
+          <p class="subtitle">
+            <span class="icon has-text-white">
+              <i class="fas fa-user"></i>
+            </span>
+            Username: {{username}}</p>
+          <p class="subtitle">
+            <span class="icon has-text-white">
+              <i class="fas fa-envelope"></i>
+            </span>
+            Email: {{email}}</p>
+          <p class="subtitle">
+            <span class="icon has-text-white">
+              <i class="fas fa-user-ninja"></i>
+            </span>
+            You like to play against <b>{{opponentRanking}}</b> players!
+          </p>
+          <p class="subtitle">
+            <span class="icon has-text-white">
+              <i class="fas fa-table-tennis"></i>
+            </span>
+            You {{prioritySubmit?'have already':"haven't"}} provided your priorities!</p>
+        </div>
+      </div>
+    </article>
+  </div>
+</div>
+
+  <hr>
+  <!-- End of profile section -->
+
+</ng-container>
+</div>
+<!-- End of container -->
+</header>
+
+<ng-container *ngIf="isPlayer()">
+    <div class="card mb-5">
+      
+
+      
+      <h5 style="text-align: center;">Select games priorities!<p>Each game is of 30 minutes.</p></h5>
+
+      <table class="table table-bordered table-sm m-0">
+      <thead class="">
+          <tr>
+            <th>Name</th>
+            <th>Level</th>
+            <th>Priority</th>
+          </tr>
+        </thead>
+        <ng-container *ngFor="let interest of Interests;">
+        <tbody>
+          <tr>
+            <td>
+              <h6>{{ interest.name }}</h6>
+            </td>
+            <td>
+              <h6>{{ interest.level }}</h6>
+            </td>
+            <td>
+              <div class="select is-rounded is-primary">
+                <select name="priority" class="select-css2" (change)="selectPriority(interest.name, $event)">
+                  <option value="low">Low</option>
+                  <option value="medium">Medium</option>
+                  <option value="high">High</option>
+                </select>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </ng-container>
+      </table>
+      <input type="submit" class="button is-primary" value="Submit" (click)="savePriorities()"/>
+    </div>
+
+    <ng-container *ngIf="attendence">
+    <div class="card mb-5">
+      <h5 style="text-align: center;">Your weekly Timetable!</h5>
+      <div class="card-block p-0">
+      <table class="table table-bordered table-sm m-0">
+        
+        <thead class="">
+          <tr>
+            <th>Day</th>
+            <th>Time</th>
+            <th>Games</th>
+          </tr>
+        </thead>
+        <ng-container *ngFor="let schedule of schedule;">
+        <tbody>
+          <tr>
+            <td>
+              <h6>{{ schedule.name }}</h6>
+            </td>
+            <td>
+              {{ schedule.time.hour }} : {{ schedule.time.minute }} hours to {{schedule.time.hour + 1}} : {{schedule.time.minute }} hours
+            </td>
+            <td>
+              <h6>{{ schedule.game }}</h6>
+            </td>
+          </tr>
+        </tbody>
+      </ng-container>
+      </table>
+      </div>
+    </div>
+  </ng-container>
+  </ng-container>
+
+
+<ng-container *ngIf="isCoach()">
+
+  <div class="profile">
+    <div class="profile-image">
+      <div class="image_outer_container">
+        <div class="green_icon"></div>
+        <div class="image_inner_container">
+          <img src="../../../assets/images/user-profiles.png"/>
+        </div>
+      </div>
+    </div>
+
+    <div class="profile-stats">
+
+      <ul>
+        <li><span class="profile-stat-count">Name: </span> <strong>{{ name }}</strong></li>
+        <br>
+        <li><span class="profile-stat-count">Username: </span>{{ username }}</li>
+        <br>
+        <li><span class="profile-stat-count">User: </span>{{ role }}</li>
+        <br>
+        <li><span class="profile-stat-count">Email: </span>{{ email }}</li>
+        <br>
+      </ul>
+
+    </div>
+
+  </div>
+  <hr>
+
+	<br>
+  <!-- JustCoachThings -->
+  <h5 style="text-align: center;">Your assigned players!</h5>
+		<table class="table">
+		<thead class="thead-light">
+			<tr>
+			<th scope="col">#</th>
+			<th scope="col">Username</th>
+			<th scope="col">Name</th>
+			<th scope="col">Email</th>
+			<th scope="col">Status</th>
+			</tr>
+		</thead>
+		<tbody>
+			<ng-container *ngFor="let player of players; let i=index">
+				<tr>
+				<th scope="row">{{i+1}}</th>
+				<td>{{player.username}}</td>
+				<td>{{player.name}}</td>
+				<td>{{player.email}}</td>
+				<td>{{player.attendenceMarked?'Online':'Offline'}}</td>
+				</tr>
+			</ng-container>
+		</tbody>
+		</table>
+</ng-container>
+
+<div class="container is-fluid">
+    
+  <footer class="footer"><div class="container">
+      <div class="level">
+        <div class="level-left">
+          <div class="level-item"><a class="title is-4" href="#"><img src="assets/images/teammeup-black.png" alt="TeamMeUp" width="200"></a></div>
+        </div>
+        <div class="level-right">Made Using:&nbsp;&nbsp;<a class="level-item" href="https://bulma.io/">Bulma</a><a class="level-item" href="https://unsplash.com/">Unsplash</a><a class="level-item" href="https://github.com/">Github</a><a class="level-item" href="http://freepik.com/">FreePik</a></div>
+      </div>
+      <hr><div class="columns">
+        <div class="column">
+          <div class="buttons"><a class="button" href="https://github.com/hassanShabbir1960/teammeupp">&nbsp;Code&nbsp;<i class="fas fa-code"></i></a></div>
+        </div>
+        <div class="column has-text-centered has-text-right-tablet">
+          <p class="subtitle is-6">&copy; 2020 TeamMeUp. All right reserved.</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+</div>

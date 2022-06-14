@@ -1,0 +1,53 @@
+<div class="box" style=" text-align:center; font-weight:1; background-color: black; color: white; border-top-left-radius: 0%; border-top-right-radius: 0%; font-size:xx-large;">NOTIFICATIONS</div>
+
+
+<ng-container *ngIf="authService.isAdmin()">
+	<br><br>
+	<table class="table">
+	  <thead class="thead-light">
+		<tr>
+		  <th scope="col">#</th>
+		  <th scope="col">Sender</th>
+		  <th scope="col">About</th>
+		  <th scope="col">Message</th>
+		  <th scope="col">Seen</th>
+		</tr>
+	  </thead>
+	  <tbody>
+		<ng-container *ngFor="let notification of notifications;let i=index">
+			<tr>
+			<th scope="row">{{i+1}}</th>
+			<td>{{notification.sender}}</td>
+			<td>{{notification.header}}</td>
+			<td>{{notification.message}}</td>
+			<td>
+                <ng-container *ngIf="notification.shown"><span class="icon has-text-success"><i class="fas fa-eye"></i></span></ng-container>
+                <ng-container *ngIf="!notification.shown"><span class="icon has-text-danger"><i class="fas fa-eye-slash"></i></span></ng-container>
+			</td>
+			</tr>
+		</ng-container>
+	  </tbody>
+	</table>
+
+	
+<div class="container is-fluid">
+    
+	<footer class="footer"><div class="container">
+		<div class="level">
+		  <div class="level-left">
+			<div class="level-item"><a class="title is-4" href="#"><img src="assets/images/teammeup-black.png" alt="TeamMeUp" width="200"></a></div>
+		  </div>
+		  <div class="level-right">Made Using:&nbsp;&nbsp;<a class="level-item" href="https://bulma.io/">Bulma</a><a class="level-item" href="https://unsplash.com/">Unsplash</a><a class="level-item" href="https://github.com/">Github</a><a class="level-item" href="http://freepik.com/">FreePik</a></div>
+		</div>
+		<hr><div class="columns">
+		  <div class="column">
+			<div class="buttons"><a class="button" href="https://github.com/hassanShabbir1960/teammeupp">&nbsp;Code&nbsp;<i class="fas fa-code"></i></a></div>
+		  </div>
+		  <div class="column has-text-centered has-text-right-tablet">
+			<p class="subtitle is-6">&copy; 2020 TeamMeUp. All right reserved.</p>
+		  </div>
+		</div>
+	  </div>
+	</footer>
+  </div>
+</ng-container>

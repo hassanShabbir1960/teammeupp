@@ -1,0 +1,76 @@
+<div class="box" style=" text-align:center; font-weight:1; background-color: black; color: white; border-top-left-radius: 0%; border-top-right-radius: 0%; font-size:xx-large; text-transform:uppercase;">NEW {{sessionGame}} SESSION</div>
+
+<div class="row show-hide-message">
+    <div [ngClass]="messageClass">
+      {{ message }}
+    </div>
+</div>
+
+<br>
+
+<ng-container *ngIf="players.length>0; else elseblock">
+    <h4>Select Opponent:</h4>
+    <table class="table">
+        <thead class="thead-light">
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Username</th>
+                <th>Role</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- <form> -->
+                <tr>
+                    <td>
+                        <!-- <button type="button" id="random" [ngClass]="status?'button is-success':'button is-primary'" (click)="selectOpponent('random')">Team Me Up with an interested player!</button>‏‏‎ ‎‏‏‎ ‎ -->
+                        
+                        <div class="form-check control">
+                            <label class="radio">
+                                <input class="form-check-input" type="radio" value="random" name="gob" [checked]="true" 
+                                (change)="selectOpponent('an interested player')"/><span class="label-text">Team Me Up with an interested player!</span>
+                            </label>
+                        </div>
+                    </td>
+                    <td></td><td></td><td></td>
+                </tr>
+                <ng-container *ngFor="let player of players;">
+                    <tr *ngIf="player._id!=_id">
+                        <td>
+                            <div class="form-check control">
+                                <label class="radio">
+                                    <input class="form-check-input" type="radio" value="random" name="gob" 
+                                    (change)="selectOpponent(player)"/><span class="label-text">{{player.username}}</span>
+                                </label>
+                            </div>
+                            <!-- <button type="button" [ngClass]="player.selectedOpponent?'button is-success':'button is-primary'" (click)="selectOpponent(player.username)">{{player.name}}</button>‏‏‎ ‎‏‏‎ ‎ -->
+                        </td>
+                        <td>{{player.email}}</td>
+                        <td>{{player.username}}</td>
+                        <td>{{player.role}}</td>
+                    </tr>
+                </ng-container>
+            <!-- </form> -->
+        </tbody>
+    </table>
+
+    <div style="text-align: center;">
+        <!-- <form>
+            <h5>Select Instructor</h5> ‎
+            <select name="selectEvaluator" style="display:inline-block" (change)="selectEvaluator($event.target.value)">
+                <option class="form-check-input" name="gob" value="none" selected>Select Evaluator</option>
+                <ng-container *ngFor="let coach of coaches;">
+                    <option class="form-check-input" name="gob" value={{coach._id}}>
+                    <span class="label-text">{{coach.username}}</span>
+                </ng-container>
+            </select>
+        </form> -->
+
+    </div>
+
+    <input class="button is-primary" type="submit" value="Submit" (click)="initiateGame()" style="font-weight:bold" />
+</ng-container>
+<ng-template #elseblock>
+    No interested players are online at the moment! Check back later.
+    <br><br><input class="button is-primary" style="font-weight:bold" type="submit" value="Return To Dashboard" (click)="returnToDashboard()" />
+</ng-template>

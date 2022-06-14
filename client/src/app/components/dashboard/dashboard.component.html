@@ -1,0 +1,385 @@
+<div class="box" style=" text-align:center; font-weight:1; background-color: black; color: white; border-top-left-radius: 0%; border-top-right-radius: 0%; font-size:xx-large;">DASHBOARD
+	<ng-container *ngIf="isPlayer() && lastLogin && attendenceMarked">
+		<br>
+		<ng-container *ngFor="let interest of interestNames">
+			<button type="button" class="button is-primary" (click)="play(interest)" style="margin-top:10px;width:24%;font-weight:bold;">Play {{interest}}</button>‏‏‎
+		</ng-container>
+	</ng-container>
+</div>
+
+<br>
+<!-- <div class="row show-hide-message">
+    <div [ngClass]="messageClass">
+      {{ message }}
+    </div>
+</div> -->
+
+
+<ng-container *ngIf="isPlayer()">
+	<ng-container *ngIf="!lastLogin">
+		<h5 style="text-align: center;">Select your Weekly schedule! <p>Each slot is of 1 hour!</p></h5>
+			<div class="card-block p-0">
+			<table class="table table-bordered table-sm m-0">
+				
+				<thead class="thead-light">
+					<tr>
+						<th>Select</th>
+						<th>Day</th>
+						<th>Time</th>
+					</tr>
+				</thead>
+				<ng-container *ngFor="let day of weekdays;">
+				<tbody>
+					<tr>
+						<td>
+							<label class="custom-control custom-checkbox">
+								<input type="checkbox" class="custom-control-input" (change)="selectDay(day.name)">
+								<span class="custom-control-indicator"></span>
+							</label>
+						</td>
+						<td>
+							<h6>{{day.name}}</h6>
+						</td>
+						<td>
+							<ng-container *ngIf="day.status">
+								<ngb-timepicker [(ngModel)]="day.time"></ngb-timepicker>
+							</ng-container>
+						</td>
+					</tr>
+				</tbody>
+				</ng-container>
+			</table>
+			<br>
+
+			<br>
+			<div class="card mb-5">
+	
+				<h5 style="text-align: center;">Select your interests!</h5>
+				<div class="card-block p-0">
+				<table class="table table-bordered table-sm m-0">
+					
+					<thead class="thead-light	">
+						<tr>
+							<th>Select</th>
+							<th>Name</th>
+							<th>Level</th>
+						</tr>
+					</thead>
+					<ng-container *ngFor="let game of games;">
+					<tbody>
+						<tr>
+							<td>
+								<label class="custom-control custom-checkbox">
+									<input type="checkbox" class="custom-control-input" (change)="selectGame(game.name)">
+									<span class="custom-control-indicator"></span>
+								</label>
+							</td>
+							<td>
+								<h6>{{game.name}}</h6>
+							</td>
+							<td>
+								<ng-container *ngIf="game.status">
+									<div class="select is-rounded is-primary">
+									<select name="difficulty" (change)="selectLevel(game.name, $event)">
+										<option value=-1>Select a Level!</option>
+										<option value="beginner">Beginner</option>
+										<option value="medium">Medium</option>
+										<option value="advance">Advance</option>
+									</select>
+								</div>
+								</ng-container>
+							</td>
+						</tr>
+					</tbody>
+				</ng-container>
+				</table>
+				</div>
+</div>
+				<br>
+				
+			<div class="outer">
+				<div class="col-md-4">
+					<form>
+						<h5>Select your level</h5>
+						<div class="form-check">
+							<label>
+								<input class="form-check-input" type="radio" value="beginner" [(ngModel)]="playerRanking" name="gob" value="1" [checked]="true" 
+								(change)="setPlayerRanking($event.target.value)"/><span class="label-text">Beginner</span>
+							</label>
+						</div>
+						<div class="form-check">
+							<label>
+								<input class="form-check-input" type="radio" value="medium" [(ngModel)]="playerRanking" name="gob" value="2" [checked]="true" 
+								(change)="setPlayerRanking($event.target.value)"/> <span class="label-text">Medium</span>
+							</label>
+						</div>
+						<div class="form-check">
+							<label>
+								<input class="form-check-input" type="radio" value="advance" [(ngModel)]="playerRanking" name="gob" value="3" [checked]="true" 
+								(change)="setPlayerRanking($event.target.value)"/><span class="label-text">Advance</span>
+							</label>
+						</div>
+					</form>
+				</div>
+				
+				<div class="col-md-4">
+					<form>
+						<h5>Select your oppenents level</h5>
+						<div class="form-check">
+							<label>
+								<input class="form-check-input" type="radio" value="beginner" [(ngModel)]="opponentRanking" name="gob" value="1" [checked]="true" 
+								(change)="setOpponentRanking($event.target.value)"/><span class="label-text">Beginner</span>
+							</label>
+						</div>
+						<div class="form-check">
+							<label>
+								<input class="form-check-input" type="radio" value="medium" [(ngModel)]="opponentRanking" name="gob" value="2" [checked]="true" 
+								(change)="setOpponentRanking($event.target.value)"/><span class="label-text">Medium</span>
+							</label>
+						</div>
+						<div class="form-check">
+							<label>
+								<input class="form-check-input" type="radio" value="advance" [(ngModel)]="opponentRanking" name="gob" value="3" [checked]="true" 
+								(change)="setOpponentRanking($event.target.value)"/><span class="label-text">Advance</span>
+							</label>
+						</div>
+					</form>
+				</div>
+			</div>
+
+			<input [disabled]="!selectSchedule || !selectPlayerRanking || !selectOpponentRanking || !selectInterests" type="submit" class="button is-primary" value="Submit" (click)="saveSchedule()"/>
+
+			<br>
+			<br>
+		</div>
+
+	</ng-container>
+
+	<ng-container *ngIf="lastLogin"><h2>Welcome back, {{name}}!</h2>
+	<ng-container *ngIf="!attendenceMarked">Mark your attendence in Profile to start a new game!<br></ng-container>
+		<br>
+		
+		<app-graphs></app-graphs>
+		<h3>Your Matches
+			<button class="button is-primary" style="font-weight:bold" type="button" data-toggle="collapse" data-target="#playerMatches" aria-expanded="false" aria-controls="playerMatches">
+				Show/Hide
+			</button>
+		</h3>
+		<div class="collapse" id="playerMatches">
+		<table class="table">
+		  <thead class="thead-light">
+			<tr>
+			  <th scope="col">#</th>
+			  <th scope="col">Type</th>
+			  <!-- <th scope="col">Player</th> -->
+			  <th scope="col">Opponent</th>
+			  <th scope="col">Game</th>
+			  <th scope="col">Venue</th>
+			  <th scope="col">Duration</th>
+			  <th scope="col">Ranking</th>
+			  <th scope="col"></th>
+			</tr>
+		  </thead>
+		  <tbody>
+			<ng-container *ngFor="let session of playerMatches; let i=index">
+				<tr>
+				<th scope="row">{{i+1}}</th>
+				<td>{{session.type}}</td>
+				<!-- <td>{{session.player.username}}</td> -->
+				<td>{{session.player._id==_id?session.opponentPlayer.username:session.player.username}}</td>
+				<td>{{session.game}}</td>
+				<td>{{session.court}}</td>
+				<td>1 hour</td>
+				<td>{{session.status?"Pending":getRank(session)}}</td>
+				</tr>
+			</ng-container>
+		  </tbody>
+		</table>
+	</div>
+		<!-- <b>Total Match Sessions: {{playerMatches.length}}</b> -->
+
+		<br><br>
+		<h3>Your Practice Sessions
+			<button class="button is-primary" style="font-weight:bold" type="button" data-toggle="collapse" data-target="#playerSessions" aria-expanded="false" aria-controls="playerSessions">
+				Show/Hide
+			</button>
+			</h3>
+		<div class="collapse" id="playerSessions">
+		<table class="table">
+		  <thead class="thead-light">
+			<tr>
+			  <th scope="col">#</th>
+			  <th scope="col">Type</th>
+			  <!-- <th scope="col">Player</th> -->
+			  <th scope="col">Opponent</th>
+			  <th scope="col">Game</th>
+			  <th scope="col">Venue</th>
+			  <th scope="col">Duration</th>
+			  <th scope="col"></th>
+			</tr>
+		  </thead>
+		  <tbody>
+			<ng-container *ngFor="let session of playerPractices; let i=index">
+				<tr>
+				<th scope="row">{{i+1}}</th>
+				<td>{{session.type}}</td>
+				<!-- <td>{{session.player.username}}</td> -->
+				<td>{{session.opponentCoach.username}}</td>
+				<td>{{session.game}}</td>
+				<td>{{session.court}}</td>
+				<td>1 hour</td>
+				</tr>
+			</ng-container>
+		  </tbody>
+		</table>
+		</div>
+		<br>
+		
+		<!-- Total Practice Sessions: {{playerPractices.length}} -->
+		<br><br><br>
+		
+		
+	</ng-container>
+</ng-container>
+
+<ng-container *ngIf="isCoach()">
+	<h2>Welcome back, Coach {{name}}!</h2>
+
+	<div class="row show-hide-message">
+		<div [ngClass]="messageClassSession">
+		  {{ messageSession }}
+		</div>
+	</div>
+	
+	<h3>Sessions‏‏‎ ‎‏‏‎ ‎
+		<button class="button is-primary" style="font-weight:bold" type="button" data-toggle="collapse" data-target="#coachsessionstable" aria-expanded="false" aria-controls="coachsessionstable">
+			Show/Hide
+		</button>
+	</h3>
+	<div class="collapse show" id="coachsessionstable">
+		<table class="table">
+		<thead class="thead-light">
+			<tr>
+			<th scope="col">#</th>
+			<th scope="col">Type</th>
+			<th scope="col">Player</th>
+			<th scope="col">Opponent</th>
+			<th scope="col">Game</th>
+			<!-- <th scope="col">Evaluator</th> -->
+			<th scope="col">Venue</th>
+			<th scope="col"></th>
+			</tr>
+		</thead>
+		<tbody>
+			<ng-container *ngFor="let session of coachSessions; let i=index">
+				<tr>
+				<th scope="row">{{i+1}}</th>
+				<td>{{session.type}}</td>
+				<td>{{session.player.username}}</td>
+				<td>{{session.oppPlayer?session.opponentPlayer.username:session.opponentCoach.username}}</td>
+				<td>{{session.game}}</td>
+				<!-- <td>{{session.evaluatorUsername}}</td> -->
+				<td>{{session.court}}</td>
+				<td>
+					<button [disabled]="!session.status" type="button" [ngClass]="session.status?'btn btn-warning':'btn btn-success'" (click)="evaluateSession(session._id)">Evaluate</button>
+				‏‏‎</td>
+				</tr>
+			</ng-container>
+		</tbody>
+		</table>
+	</div>
+	<!-- JustCoachThings -->
+</ng-container>
+
+<ng-container *ngIf="isAdmin()">
+	<!-- CRUD Operations on Players and Coaches -->
+	<app-toasts></app-toasts>
+	<p>
+	<h3>Players</h3>	
+	<button type="button" class="button is-black" (click)="createPlayer()"><b>Create‏‏‎ ‎‏‏‎ <div class="icon has-text-warning"><i class="fas fa-plus-circle"></i></div></b></button>‏‏‎
+	<br> ‎‏‏‎ ‎
+	<div class="card mb-5">
+		<table class="table">
+		<thead class="thead-light">
+			<tr>
+			<th scope="col" style="width:5%">#</th>
+			<th scope="col" style="width:15%">Username</th>
+			<th scope="col" style="width:15%">Name</th>
+			<th scope="col" style="width:25%">Email</th>
+			<th scope="col" style="width:20%"></th>
+			</tr>
+		</thead>
+		<tbody>
+			<ng-container *ngFor="let player of players; let i=index">
+				<tr>
+				<th scope="row">{{i+1}}</th>
+				<td>{{player.username}}</td>
+				<td>{{player.name}}</td>
+				<td>{{player.email}}</td>
+				<td>
+					<!-- <button type="button" class="btn btn-primary">View Details</button>‏‏‎ ‎‏‏‎ ‎ -->
+					<button type="button" class="button is-primary" (click)="updatePlayer(player.username)"><b>Edit‏‏‎ ‎‏‏‎ <div class="icon"><i class="fas fa-pen"></i></div></b></button>‏‏‎ ‎‏‏‎ ‎
+					<button type="button" class="button is-danger" (click)="deletePlayer(player.username)"><b>Remove ‎‏‏‎ <div class="icon"><i class="fas fa-minus-circle"></i></div>  </b></button>
+				</td>
+				</tr>
+			</ng-container>
+		</tbody>
+		</table>
+	</div>
+
+	<p>
+	<h3>Coaches</h3>	
+	<button type="button" class="button is-black" (click)="createCoach()"><b>Create‏‏‎ ‎‏‏‎ <div class="icon has-text-warning"><i class="fas fa-plus-circle"></i></div></b></button>‏‏‎ ‎‏‏‎   
+	<br><br>
+	<div class="card mb-5">
+		<table class="table">
+		<thead class="thead-light">
+			<tr>
+				<th scope="col" style="width:5%">#</th>
+				<th scope="col" style="width:15%">Username</th>
+				<th scope="col" style="width:15%">Name</th>
+				<th scope="col" style="width:25%">Email</th>
+				<th scope="col" style="width:20%"></th>
+			</tr>
+		</thead>
+		<tbody>
+			<ng-container *ngFor="let coach of coaches;let i=index">
+				<tr>
+				<th scope="row">{{i+1}}</th>
+				<td>{{coaches[i].username}}</td>
+				<td>{{coaches[i].name}}</td>
+				<td>{{coaches[i].email}}</td>
+				<td>
+					<!-- <button type="button" class="btn btn-primary">View Details</button>‏‏‎ ‎‏‏‎ ‎ -->
+					<button type="button" class="button is-primary" (click)="updateCoach(coach.username)"><b>Edit‏‏‎ ‎‏‏‎ <div class="icon"><i class="fas fa-pen"></i></div></b></button>‏‏‎ ‎‏‏‎ ‎
+					<button type="button" class="button is-danger" (click)="deleteCoach(coach.username)"><b>Remove ‎‏‏‎ <div class="icon"><i class="fas fa-minus-circle"></i></div></b></button>
+				</td>
+				</tr>
+			</ng-container>
+		</tbody>
+		</table>
+	</div>
+	<br><br>
+
+</ng-container>
+
+<div class="container is-fluid">
+    
+	<footer class="footer"><div class="container">
+		<div class="level">
+		  <div class="level-left">
+			<div class="level-item"><a class="title is-4" href="#"><img src="assets/images/teammeup-black.png" alt="TeamMeUp" width="200"></a></div>
+		  </div>
+		  <div class="level-right">Made Using:&nbsp;&nbsp;<a class="level-item" href="https://bulma.io/">Bulma</a><a class="level-item" href="https://unsplash.com/">Unsplash</a><a class="level-item" href="https://github.com/">Github</a><a class="level-item" href="http://freepik.com/">FreePik</a></div>
+		</div>
+		<hr><div class="columns">
+		  <div class="column">
+			<div class="buttons"><a class="button" href="https://github.com/hassanShabbir1960/teammeupp">&nbsp;Code&nbsp;<i class="fas fa-code"></i></a></div>
+		  </div>
+		  <div class="column has-text-centered has-text-right-tablet">
+			<p class="subtitle is-6">&copy; 2020 TeamMeUp. All right reserved.</p>
+		  </div>
+		</div>
+	  </div>
+	</footer>
+  </div>
